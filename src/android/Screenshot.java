@@ -9,6 +9,7 @@
 package com.darktalker.cordova.screenshot;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -94,7 +95,10 @@ public class Screenshot extends CordovaPlugin {
 
     private void saveScreenshot(Bitmap bitmap, String format, String fileName, Integer quality) {
         try {
-            File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
+            Context context = this.cordova.getActivity().getApplicationContext();
+            String dir = context.getExternalFilesDir("share").getPath();
+            File folder = new File(dir, "Pictures");
+
             if (!folder.exists()) {
                 folder.mkdirs();
             }
